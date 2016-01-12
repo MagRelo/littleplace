@@ -1,0 +1,12 @@
+navbar
+
+header#banner.hero-unit
+.container
+  .col-md-12
+    h2 Create group
+    form.form(name="createGroupForm")
+      .form-group
+        label Name
+        input.form-control(type="text", ng-model="createGroupForm.name")
+      .form-group
+        button.btn.btn-primary(type="submit", ng-click="createGroup(createGroupForm)") Create Group
