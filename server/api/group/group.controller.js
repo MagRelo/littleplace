@@ -100,3 +100,15 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+// Join a group
+export function joinGroup(req, res) {
+
+  // var memberId = req.body.memberId;
+
+  Group.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}

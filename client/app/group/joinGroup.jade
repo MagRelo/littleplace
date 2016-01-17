@@ -1,0 +1,21 @@
+navbar
+
+header#banner.hero-unit
+    postme
+
+.container
+  .col-md-2
+  .col-md-8
+    h2 Join Groups
+    ul.list-unstyled.group
+      li(ng-repeat="group in groups", ng-class="{'highlight': group.userIsMember}")
+
+        div(ng-if="!group.userIsMember")
+          button.btn.btn-primary.pull-right(ng-click="joinGroup(group)") Join
+        div(ng-if="group.userIsMember")
+          button.btn.btn-primary.pull-right(ng-click="leaveGroup(group)") Leave
+
+        h5 {{group.groupName}}
+          span.small {{group.groupLocation}}
+
+

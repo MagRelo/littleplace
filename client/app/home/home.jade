@@ -1,46 +1,28 @@
 navbar
 
 header#banner.hero-unit
+    postme
+
 .container
-  .col-md-8
-    h2 Add Review
-    form.form(name="addReview")
-      .form-group
-        label Place
-        input.form-control(type="text", ng-model="addReview.place")
-      .form-group
-        label Rating
-        rating(max="5", ng-model="addReview.rating")
-      .form-group
-        label Review
-        textarea.form-control(type="text", rows="3", ng-model="addReview.review")
-      .form-group
-        button.btn.btn-primary(type="submit", ng-click="submitReview(addReview)") Post
-
-    p {{response}}
-
-
 
   .col-md-4
-    h2 My Profile
-
-  .col-md-6.feed
       h2 Activity Feed
-      ul.list-unstyled
+      ul.list-unstyled.feed
         li(ng-repeat="activity in feed")
           span(ng-class="{'glyphicon-user': activity.type === 'addfriend', 'glyphicon-ok': activity.type === 'review'}").glyphicon
           | {{activity.title}} – {{activity.data}}
 
-  .col-md-6
-      h2
-        ul.list-inline.pull-right
-          li
-            a.btn.btn-primary(href="/joingroup") Join Group
-          li
-            a.btn.btn-primary(href="/creategroup") Create Group
-        | My Groups
+  .col-md-4
+      h2 My Groups
       ul.list-unstyled.group
         a(ng-repeat="group in groups" , ng-href="/group/{{group.slug}}")
           li()
-            span.pull-right.badge {{group.data}}
-            | {{group.name}}
+            span.pull-right.small {{group.groupLocation}}
+            | {{group.groupName}}
+
+  .col-md-4
+    h2 My Profile
+    ul.list-unstyled
+      li(ng-repeat="activity in userFeed")
+        span(ng-class="{'glyphicon-user': activity.type === 'addfriend', 'glyphicon-ok': activity.type === 'review'}").glyphicon
+        | {{activity.place}} – {{activity.review}}

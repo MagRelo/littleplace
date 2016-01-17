@@ -5,7 +5,8 @@ class NavbarController {
   menu = [
     {'title': 'Main', 'state': 'main'},
     {'title': 'Home', 'state': 'home'},
-    {'title': 'My Groups', 'state': 'group'}
+    {'title': 'Join Groups', 'state': 'joingroup'},
+    {'title': 'Create a Group', 'state': 'creategroup'}
   ];
 
   isCollapsed = true;

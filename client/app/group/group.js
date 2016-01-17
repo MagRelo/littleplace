@@ -7,5 +7,17 @@ angular.module('littleplaceApp')
         url: '/group/:groupName',
         templateUrl: 'app/group/group.html',
         controller: 'GroupCtrl'
-      });
+      })
+      .state('joingroup', {
+        url: '/joingroup',
+        templateUrl: 'app/group/joingroup.html',
+        controller: 'joinGroupCtrl'
+      })
+      .state('creategroup', {
+        url: '/creategroup',
+        templateUrl: 'app/group/creategroup.html',
+        controller: 'createGroupCtrl'
+      })
+
+      ;
   });

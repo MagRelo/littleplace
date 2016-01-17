@@ -1,0 +1,21 @@
+navbar
+
+header#banner.hero-unit
+    postme
+
+.container
+  .col-md-2
+
+  .col-md-8
+
+    .well
+      form.form(name="createGroupForm")
+        legend Add a new group
+        .form-group
+          label Name
+          input.form-control(type="text", ng-model="createGroupForm.groupName")
+        .form-group
+          label Location
+          input.form-control(type="text", ng-model="createGroupForm.groupLocation")
+        .form-group
+          button.btn.btn-success(ng-click="createGroup(createGroupForm)") Create Group

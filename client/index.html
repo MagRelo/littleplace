@@ -20,6 +20,8 @@
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
+
+
   </head>
   <body ng-app="littleplaceApp">
     <!--[if lt IE 7]>
@@ -30,15 +32,15 @@
     <div ui-view=""></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+     <script>
+      //   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      //   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      //   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      //   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-XXXXX-X');
-      ga('send', 'pageview');
-    </script>
+      //   ga('create', 'UA-XXXXX-X');
+      //   ga('send', 'pageview');
+     </script>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -63,24 +65,22 @@
       <script src="app/admin/admin.module.js"></script>
       <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/joingroup/joingroup.js"></script>
+      <script src="app/main/main.js"></script>
       <script src="app/admin/admin.controller.js"></script>
       <script src="app/account/account.js"></script>
       <script src="app/admin/admin.router.js"></script>
       <script src="app/app.constant.js"></script>
-      <script src="app/creategroup/creategroup.controller.js"></script>
-      <script src="app/creategroup/creategroup.js"></script>
       <script src="app/friends/friends.controller.js"></script>
       <script src="app/friends/friends.js"></script>
+      <script src="app/group/creategroup.controller.js"></script>
       <script src="app/group/group.controller.js"></script>
       <script src="app/group/group.js"></script>
       <script src="app/group/group.service.js"></script>
+      <script src="app/group/joingroup.controller.js"></script>
       <script src="app/home/home.controller.js"></script>
       <script src="app/home/home.js"></script>
-      <script src="app/joingroup/joingroup.controller.js"></script>
-      <script src="app/account/login/login.controller.js"></script>
       <script src="app/main/main.controller.js"></script>
-      <script src="app/main/main.js"></script>
+      <script src="app/account/login/login.controller.js"></script>
       <script src="app/account/settings/settings.controller.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/interceptor.service.js"></script>
@@ -93,6 +93,8 @@
       <script src="components/navbar/navbar.directive.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.controller.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.directive.js"></script>
+      <script src="components/postModalButton/postModalButton.controller.js"></script>
+      <script src="components/postModalButton/postModalButton.directive.js"></script>
       <script src="components/reviewService/reviewService.service.js"></script>
       <script src="app/account/signup/signup.controller.js"></script>
       <script src="components/util/util.service.js"></script>

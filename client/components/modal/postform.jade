@@ -1,0 +1,18 @@
+.modal-header
+  button.close(ng-if='modal.dismissable', type='button', ng-click='$dismiss()') &times;
+  h4.modal-title(ng-if='modal.title', ng-bind='modal.title')
+.modal-body
+
+  form.form(name="formData")
+    .form-group
+      label Place
+      input.form-control(type="text", ng-model="modal.formData.place")
+    .form-group
+      label Rating
+      rating(max="5", ng-model="modal.formData.rating")
+    .form-group
+      label Review
+      textarea.form-control(type="text", rows="3", ng-model="modal.formData.review")
+
+.modal-footer
+  button.btn(ng-repeat='button in modal.buttons', ng-class='button.classes', ng-click='button.click($event)', ng-bind='button.text')

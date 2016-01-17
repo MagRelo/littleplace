@@ -13,11 +13,14 @@ angular.module('littleplaceApp')
 
       angular.extend(modalScope, scope);
 
-      return $modal.open({
-        templateUrl: 'components/modal/modal.html',
-        windowClass: modalClass,
-        scope: modalScope
-      });
+      return $modal.open(
+        {
+          templateUrl: 'components/modal/postform.html',
+          windowClass: modalClass,
+          scope: modalScope
+        }
+      );
+
     }
 
     // Public API here
@@ -67,7 +70,53 @@ angular.module('littleplaceApp')
               del.apply(event, args);
             });
           };
-        }
+        },
+
+        post(del = angular.noop) {
+          /**
+           * Open a delete confirmation modal
+           * @param  {String} title  - name or info to show on modal
+           * @param  {All}           - any additional args are passed straight to del callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+                title = args.shift(),
+                formData = {},
+                postModal;
+
+            postModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Add a review!',
+                formData: formData,
+                buttons: [
+                  {
+                    classes: 'btn-success',
+                    text: 'Post',
+                    click: function(e) {
+                      postModal.close(e);
+                    }
+                  },
+                  {
+                    classes: 'btn-default',
+                    text: 'Cancel',
+                    click: function(e) {
+                      postModal.dismiss(e);
+                    }
+                  }
+                ]
+              }
+            }, 'modal-success');
+
+            postModal.result.then(function(event) {
+              del.apply(event, [formData]);
+            });
+
+          };
+        },
+
+
+
       }
     };
   });

@@ -7,6 +7,9 @@ angular.module('littleplaceApp')
     return {
       save: function(data){
         return $http.post(apiEndpoint + '/', data)
+      },
+      list: function(){
+        return $http.get(apiEndpoint + '/')
       }
     }
 

@@ -5,6 +5,8 @@ import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
+var Group = require('../group/group.model.js')
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
