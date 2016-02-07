@@ -90,14 +90,17 @@ export function create(req, res) {
       const user1 = client.feed('user', req.user._id);
 
       const actorString = "User:" + req.user._id
-      const groupString = "Group:" + doc._id
-      const title = req.user.name + " created a new review: " + doc.place
+      const title = '<span><span class="placeName">'
+        + doc.placeName
+        + '</span><span class="userName">'
+        + req.user.name
+        + '</span></span>'
 
       // Add an activity to the feed
       const activity = {
         "actor": actorString,
         "verb": "createReview",
-        "object": req.user.name,
+        "object": JSON.stringify(req.body),
         "title": title,
         "foreign_id": doc._id
       };

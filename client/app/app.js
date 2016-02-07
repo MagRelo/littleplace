@@ -11,6 +11,7 @@ angular.module('littleplaceApp', [
   'ui.bootstrap',
   'uiGmapgoogle-maps',
   'geolocation',
+  'google.places',
 ])
   .config(function($urlRouterProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
     $urlRouterProvider
@@ -19,9 +20,9 @@ angular.module('littleplaceApp', [
     $locationProvider.html5Mode(true);
 
     uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
+      key: 'AIzaSyByZEWY1mVD4izI-b397wdH_JsBSaK15Xw',
+      v: '3.20', //defaults to latest 3.X anyhow
+      libraries: 'weather,geometry,visualization'
     });
   });
 

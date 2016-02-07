@@ -13,6 +13,8 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/autocomplete.css" />
+      <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -21,7 +23,7 @@
       <!-- endinjector -->
     <!-- endbuild -->
 
-
+    <link rel="stylesheet" href="/bower_components/angular-google-places-autocomplete/src/autocomplete.css">
   </head>
   <body ng-app="littleplaceApp">
     <!--[if lt IE 7]>
@@ -46,6 +48,8 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -60,6 +64,8 @@
       <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
       <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
       <script src="bower_components/angularjs-geolocation/src/geolocation.js"></script>
+      <script src="bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+      <script src="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->

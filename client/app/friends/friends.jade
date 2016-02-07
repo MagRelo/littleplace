@@ -5,52 +5,73 @@ navbar
     uib-tabset
       uib-tab(heading="Reviews")
 
-        uib-tabset
+        uib-tabset.innerTabSet(type="pills")
+
           uib-tab(heading="Map")
-            ui-gmap-google-map(center='map.center' zoom='map.zoom')
 
-          uib-tab(heading="Review List")
+            ui-gmap-google-map(
+              center='map.center',
+              zoom='map.zoom',
+              options='mapOptions')
+
+              ui-gmap-marker(
+                ng-repeat="activity in activity | filter : reviewFilter",
+                idKey="activity.foreign_id",
+                coords="{longitude: activity.object.location.coordinates[0], latitude: activity.object.location.coordinates[1]}")
+
             ul.list-unstyled.feed
-              //- li(ng-repeat="activity in activity | filter : {'activity.foreign_id': '!null'}")
-
 
               li(ng-repeat="activity in activity | filter : reviewFilter")
 
-                a(ng-href="/review/{{activity.foreign_id}}") View
+                a.pull-right(ng-href="/review/{{activity.foreign_id}}") View
 
-                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
-                | {{activity.title}}
+                span(ng-bind-html="activity.title")
+
+                span.glyphicon(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}")
 
 
           uib-tab(heading="Add Review")
 
+            //- Google Typeahead
             .well.well-sm
-              form.form(name="reviewForm")
+              form.form
                 .form-group
                   label Place
-                  input.form-control(type="text", ng-model="reviewForm.place")
+                  input.form-control(
+                    type="text",
+                    ng-model="googlePlace.response",
+                    g-places-autocomplete,
+                    forceSelection=true,
+                    options="autocompleteOptions"
+                  )
+
+            //- Place details
+            .placard
+              p.h4 {{googlePlace.name}}
+              uib-rating(ng-model="googlePlace.rating")
+              p {{googlePlace.formatted_phone_number}}
+              p {{googlePlace.formatted_address}}
+              p {{googlePlace.geometry.location | json}}
+
+            .well.well-sm
+              //- User Review
+              form.form(name="reviewForm")
+
+                div.btn-group
+                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
+                    span.glyphicon.glyphicon-thumbs-up
+                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
+                    span.glyphicon.glyphicon-thumbs-down
+
                 .form-group
-                  label Rating
-                  uib-rating(max="5", ng-model="reviewForm.rating")
-                .form-group
-                  label Review
-                  textarea.form-control(type="text", rows="3", ng-model="reviewForm.review")
+                  label Comments
+                  textarea.form-control(type="text", rows="2", ng-model="reviewForm.comments")
+
                 button.btn.btn-success(ng-click="addReview(reviewForm)") Save
 
       uib-tab(heading="People")
 
-        uib-tabset
-          uib-tab(heading="Activity")
-
-            h2 Activity Feed
-            ul.list-unstyled.feed
-              li(ng-repeat="activity in activity")
-
-                a(ng-if="activity.foreign_id", ng-href="/review/{{activity.foreign_id}}") View
-
-                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
-                | {{activity.title}}
-
+        uib-tabset.innerTabSet(type="pills")
 
           uib-tab(heading="People")
 
@@ -73,3 +94,14 @@ navbar
                       span + follow
                     button.btn.btn-danger(ng-if="user.imFollowing", ng-click="unFollow(user)")
                       span &times; unfollow
+
+          uib-tab(heading="Activity")
+
+            h2 Activity Feed
+            ul.list-unstyled.feed
+              li(ng-repeat="activity in activity")
+
+                a(ng-if="activity.foreign_id", ng-href="/review/{{activity.foreign_id}}") View
+
+                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
+                | {{activity.title}}

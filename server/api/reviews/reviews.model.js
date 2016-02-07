@@ -3,11 +3,16 @@
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var ReviewsSchema = new mongoose.Schema({
-  place: String,
+  placeName: String,
   rating: String,
-  review: String,
-  active: Boolean,
-  when: Date
+  phone: String,
+  address: String,
+  location: {
+    type : { type: String, default: "Point" },
+    coordinates: [{type: "Number"}]
+  },
+  thumbs: String,
+  comments: String,
 });
 
 export default mongoose.model('Reviews', ReviewsSchema);

@@ -16,7 +16,47 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
-.angular-google-map-container { height: 400px; }
+
+.angular-google-map-container {
+  height: 267px;
+  margin-bottom: 10px;
+}
+
+.innerTabSet{
+  padding: 10px 0 0 0;
+
+  ul.nav.nav-pills{
+    padding:  0 0 10px 0;
+  }
+}
+
+.placard{
+  box-shadow: 1px 1px 3px gray;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.feed .placeName {
+  font-weight: bold;
+}
+
+.feed .userName {
+  font-style: italic;
+  padding-left: 10px;
+
+}
+
+.feed li {
+  border: solid 1px #ddd;
+  padding: 10px;
+  margin-bottom: 10px
+}
+
+
+span.glyphicon{
+  margin-right: 10px;
+}
+
 
 // Component styles are injected through grunt
 // injector

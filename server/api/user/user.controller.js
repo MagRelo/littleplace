@@ -36,7 +36,7 @@ export function followUser(req, res) {
       const activity = {
         "actor": actorString,
         "verb": "follow",
-        "object": friend.name,
+        "object": JSON.stringify(friend),
         "title": title
       }
 
@@ -72,7 +72,7 @@ export function unFollowUser(req, res) {
       const activity = {
         "actor": actorString,
         "verb": "unfollow",
-        "object": friend.name,
+        "object": JSON.stringify(friend),
         "title": title
       };
 
