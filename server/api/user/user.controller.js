@@ -27,21 +27,21 @@ export function followUser(req, res) {
 
       return currentUserFeed.follow('user', friend._id)
     })
-    .then(function (doc) {
+    // .then(function (doc) {
 
-      const actorString = "User:" + req.user._id
-      const title = req.user.name + " is now following: " + friend.name + "!"
+    //   const actorString = "User:" + req.user._id
+    //   const title = req.user.name + " is now following: " + friend.name + "!"
 
-      // Add an activity to the feed
-      const activity = {
-        "actor": actorString,
-        "verb": "follow",
-        "object": JSON.stringify(friend),
-        "title": title
-      }
+    //   // Add an activity to the feed
+    //   const activity = {
+    //     "actor": actorString,
+    //     "verb": "follow",
+    //     "object": JSON.stringify(friend),
+    //     "title": title
+    //   }
 
-      return currentUserFeed.addActivity(activity)
-    })
+    //   return currentUserFeed.addActivity(activity)
+    // })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -63,21 +63,21 @@ export function unFollowUser(req, res) {
 
       return currentUserFeed.unfollow('user', friend._id)
     })
-    .then(function (doc) {
+    // .then(function (doc) {
 
-      const actorString = "User:" + req.user._id
-      const title = req.user.name + " is no longer following: " + friend.name
+    //   const actorString = "User:" + req.user._id
+    //   const title = req.user.name + " is no longer following: " + friend.name
 
-      // Add an activity to the feed
-      const activity = {
-        "actor": actorString,
-        "verb": "unfollow",
-        "object": JSON.stringify(friend),
-        "title": title
-      };
+    //   // Add an activity to the feed
+    //   const activity = {
+    //     "actor": actorString,
+    //     "verb": "unfollow",
+    //     "object": JSON.stringify(friend),
+    //     "title": title
+    //   };
 
-      return currentUserFeed.addActivity(activity)
-    })
+    //   return currentUserFeed.addActivity(activity)
+    // })
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

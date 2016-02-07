@@ -3,105 +3,87 @@ navbar
   .col-md-8.col-md-offset-2
 
     uib-tabset
-      uib-tab(heading="Reviews")
+      uib-tab(heading="Map")
 
-        uib-tabset.innerTabSet(type="pills")
+        ui-gmap-google-map(
+          center='map.center',
+          zoom='map.zoom',
+          options='mapOptions')
 
-          uib-tab(heading="Map")
+          ui-gmap-marker(
+            ng-repeat="activity in activity | filter : reviewFilter",
+            idKey="activity.foreign_id",
+            coords="{longitude: activity.object.location.coordinates[0], latitude: activity.object.location.coordinates[1]}")
 
-            ui-gmap-google-map(
-              center='map.center',
-              zoom='map.zoom',
-              options='mapOptions')
+        ul.list-unstyled.feed
 
-              ui-gmap-marker(
-                ng-repeat="activity in activity | filter : reviewFilter",
-                idKey="activity.foreign_id",
-                coords="{longitude: activity.object.location.coordinates[0], latitude: activity.object.location.coordinates[1]}")
+          li(ng-repeat="activity in activity | filter : reviewFilter")
 
-            ul.list-unstyled.feed
+            a.pull-right(ng-href="/review/{{activity.foreign_id}}") View
 
-              li(ng-repeat="activity in activity | filter : reviewFilter")
+            span(ng-bind-html="activity.title")
 
-                a.pull-right(ng-href="/review/{{activity.foreign_id}}") View
+            span.glyphicon(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}")
 
-                span(ng-bind-html="activity.title")
+      uib-tab(heading="Add Review")
 
-                span.glyphicon(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}")
+        //- Google Typeahead
+        .well.well-sm(ng-hide="googlePlace.placeName")
+          form.form
+            .form-group
+              label Place
+              input.form-control(
+                type="text",
+                ng-model="googlePlace.response",
+                g-places-autocomplete,
+                forceSelection=true,
+                options="autocompleteOptions"
+              )
 
+        //- Place details
+        .placard
+          p.h4 {{googlePlace.response.name}}
+          uib-rating(ng-model="googlePlace.response.rating")
+          p {{googlePlace.response.formatted_phone_number}}
+          p {{googlePlace.response.formatted_address}}
 
-          uib-tab(heading="Add Review")
+          //- User Review
+          .well.well-sm
+            form.form(name="reviewForm")
+              div
+                label Rating
+              div.btn-group
+                label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
+                  span.glyphicon.glyphicon-thumbs-up
+                label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
+                  span.glyphicon.glyphicon-thumbs-down
+              .form-group
+                label Comments
+                textarea.form-control(type="text", rows="2", ng-model="reviewForm.comments")
 
-            //- Google Typeahead
-            .well.well-sm
-              form.form
-                .form-group
-                  label Place
-                  input.form-control(
-                    type="text",
-                    ng-model="googlePlace.response",
-                    g-places-autocomplete,
-                    forceSelection=true,
-                    options="autocompleteOptions"
-                  )
-
-            //- Place details
-            .placard
-              p.h4 {{googlePlace.name}}
-              uib-rating(ng-model="googlePlace.rating")
-              p {{googlePlace.formatted_phone_number}}
-              p {{googlePlace.formatted_address}}
-              p {{googlePlace.geometry.location | json}}
-
-            .well.well-sm
-              //- User Review
-              form.form(name="reviewForm")
-
-                div.btn-group
-                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
-                    span.glyphicon.glyphicon-thumbs-up
-                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
-                    span.glyphicon.glyphicon-thumbs-down
-
-                .form-group
-                  label Comments
-                  textarea.form-control(type="text", rows="2", ng-model="reviewForm.comments")
-
-                button.btn.btn-success(ng-click="addReview(reviewForm)") Save
+              button.btn.btn-success(ng-click="addReview(reviewForm)") Save
 
       uib-tab(heading="People")
 
-        uib-tabset.innerTabSet(type="pills")
+        h2 People
+        p(ng-show="rowIsLoading") loading...
+        table.table.text-center(ng-show="!rowIsLoading")
+          thead
+            tr
+              th.text-center Name
+              th.text-center Following me
+              th.text-center
+          tbody
+            tr(ng-repeat="user in users | filter: {isMe: false}")
+              td
+                p {{user.name}}
+              td
+                span.glyphicon(ng-class="{'glyphicon-ok': user.isFollowingMe}")
+              td
+                button.btn.btn-success(ng-if="!user.imFollowing", ng-click="follow(user)")
+                  span + follow
+                button.btn.btn-danger(ng-if="user.imFollowing", ng-click="unFollow(user)")
+                  span &times; unfollow
 
-          uib-tab(heading="People")
 
-            h2 People
-            p(ng-show="rowIsLoading") loading...
-            table.table.text-center(ng-show="!rowIsLoading")
-              thead
-                tr
-                  th.text-center Name
-                  th.text-center Following me
-                  th.text-center
-              tbody
-                tr(ng-repeat="user in users | filter: {isMe: false}")
-                  td
-                    p {{user.name}}
-                  td
-                    span.glyphicon(ng-class="{'glyphicon-ok': user.isFollowingMe}")
-                  td
-                    button.btn.btn-success(ng-if="!user.imFollowing", ng-click="follow(user)")
-                      span + follow
-                    button.btn.btn-danger(ng-if="user.imFollowing", ng-click="unFollow(user)")
-                      span &times; unfollow
 
-          uib-tab(heading="Activity")
-
-            h2 Activity Feed
-            ul.list-unstyled.feed
-              li(ng-repeat="activity in activity")
-
-                a(ng-if="activity.foreign_id", ng-href="/review/{{activity.foreign_id}}") View
-
-                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
-                | {{activity.title}}
