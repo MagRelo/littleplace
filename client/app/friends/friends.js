@@ -6,6 +6,7 @@ angular.module('littleplaceApp')
       .state('friends', {
         url: '/friends',
         templateUrl: 'app/friends/friends.html',
-        controller: 'FriendsCtrl'
+        controller: 'FriendsCtrl',
+        authenticate: true
       });
   });

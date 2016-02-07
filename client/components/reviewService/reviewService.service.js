@@ -10,6 +10,9 @@ angular.module('littleplaceApp')
       },
       list: function(){
         return $http.get(apiEndpoint + '/')
+      },
+      get: function(reviewId){
+        return $http.get(apiEndpoint + '/' + reviewId)
       }
     }
 

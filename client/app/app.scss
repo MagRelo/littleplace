@@ -15,6 +15,9 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   padding: 0.2em 0;
 }
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.angular-google-map-container { height: 400px; }
+
 // Component styles are injected through grunt
 // injector
 @import 'admin/admin.scss';
@@ -22,6 +25,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 @import 'group/group.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';
+@import 'review/review.scss';
 @import '../components/footer/footer.scss';
 @import '../components/modal/modal.scss';
 @import '../components/oauth-buttons/oauth-buttons.scss';

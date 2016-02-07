@@ -20,10 +20,10 @@ navbar
       form.form(name='form', ng-submit='vm.login(form)', novalidate='')
         .form-group
           label Email
-          input.form-control(type='text', name='email', ng-model='vm.user.email')
+          input.form-control(type='text', name='email', ng-model='vm.user.email', value="admin")
         .form-group
           label Password
-          input.form-control(type='password', name='password', ng-model='vm.user.password')
+          input.form-control(type='password', name='password', ng-model='vm.user.password', value="admin")
 
         .form-group.has-error
           p.help-block(ng-show='form.email.$error.required && form.password.$error.required && vm.submitted')

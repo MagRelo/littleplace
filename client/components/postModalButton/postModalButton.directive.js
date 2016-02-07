@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('littleplaceApp')
-  .directive('postme', function () {
+  .directive('reviewbutton', function () {
     return {
       restrict: 'EA',
       template: '<button class="btn btn-large btn-success", ng-click="postModal.openModal()">Add a Review!</button>',

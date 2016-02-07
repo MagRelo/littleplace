@@ -2,12 +2,7 @@ navbar
 
 header#banner.hero-unit
 .container
-  .col-md-6
-    p.h2 {{group.name}} Activity
-  .col-md-6
-    p.h2 {{group.name}} Members
-    ul.list-unstyled.members
-      li(ng-repeat="member in group.members")
-        span.badge.pull-right {{member.reviews}}
-        | {{member.name}}
-
+  .col-sm-6
+    div(ng-controller="joinGroupCtrl", ng-include="'app/group/joingroup.html'")
+  .col-sm-6
+    div(ng-controller="createGroupCtrl", ng-include="'app/group/creategroup.html'")

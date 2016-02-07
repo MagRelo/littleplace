@@ -4,25 +4,14 @@ header#banner.hero-unit
     postme
 
 .container
-
-  .col-md-4
+  .col-md-8.col-md-offset-2
       h2 Activity Feed
       ul.list-unstyled.feed
-        li(ng-repeat="activity in feed")
-          span(ng-class="{'glyphicon-user': activity.type === 'addfriend', 'glyphicon-ok': activity.type === 'review'}").glyphicon
-          | {{activity.title}} – {{activity.data}}
+        li(ng-repeat="activity in currentUser.activity.results")
+          span.pull-right(am-time-ago="activity.time")
 
-  .col-md-4
-      h2 My Groups
-      ul.list-unstyled.group
-        a(ng-repeat="group in groups" , ng-href="/group/{{group.slug}}")
-          li()
-            span.pull-right.small {{group.groupLocation}}
-            | {{group.groupName}}
+          a(ng-if="activity.foreign_id", ng-href="/review/{{activity.foreign_id}}") View
 
-  .col-md-4
-    h2 My Profile
-    ul.list-unstyled
-      li(ng-repeat="activity in userFeed")
-        span(ng-class="{'glyphicon-user': activity.type === 'addfriend', 'glyphicon-ok': activity.type === 'review'}").glyphicon
-        | {{activity.place}} – {{activity.review}}
+
+          span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
+          | {{activity.title}}

@@ -1,7 +1,75 @@
 navbar
-
-header#banner.hero-unit
 .container
-  .col-md-12
-    h2 Friends
+  .col-md-8.col-md-offset-2
 
+    uib-tabset
+      uib-tab(heading="Reviews")
+
+        uib-tabset
+          uib-tab(heading="Map", active="showMap")
+            ui-gmap-google-map(center='map.center' zoom='map.zoom')
+
+          uib-tab(heading="Review List")
+            ul.list-unstyled.feed
+              //- li(ng-repeat="activity in activity | filter : {'activity.foreign_id': '!null'}")
+
+
+              li(ng-repeat="activity in activity | filter : reviewFilter")
+
+                a(ng-href="/review/{{activity.foreign_id}}") View
+
+                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
+                | {{activity.title}}
+
+
+          uib-tab(heading="Add Review")
+
+            .well.well-sm
+              form.form(name="reviewForm")
+                .form-group
+                  label Place
+                  input.form-control(type="text", ng-model="reviewForm.place")
+                .form-group
+                  label Rating
+                  uib-rating(max="5", ng-model="reviewForm.rating")
+                .form-group
+                  label Review
+                  textarea.form-control(type="text", rows="3", ng-model="reviewForm.review")
+                button.btn.btn-success(ng-click="addReview(reviewForm)") Save
+
+      uib-tab(heading="People")
+
+        uib-tabset
+          uib-tab(heading="Activity")
+
+            h2 Activity Feed
+            ul.list-unstyled.feed
+              li(ng-repeat="activity in activity")
+
+                a(ng-if="activity.foreign_id", ng-href="/review/{{activity.foreign_id}}") View
+
+                span(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}").glyphicon
+                | {{activity.title}}
+
+
+          uib-tab(heading="People")
+
+            h2 People
+            p(ng-show="rowIsLoading") loading...
+            table.table.text-center(ng-show="!rowIsLoading")
+              thead
+                tr
+                  th.text-center Name
+                  th.text-center Following me
+                  th.text-center
+              tbody
+                tr(ng-repeat="user in users | filter: {isMe: false}")
+                  td
+                    p {{user.name}}
+                  td
+                    span.glyphicon(ng-class="{'glyphicon-ok': user.isFollowingMe}")
+                  td
+                    button.btn.btn-success(ng-if="!user.imFollowing", ng-click="follow(user)")
+                      span + follow
+                    button.btn.btn-danger(ng-if="user.imFollowing", ng-click="unFollow(user)")
+                      span &times; unfollow

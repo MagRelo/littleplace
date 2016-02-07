@@ -4,7 +4,13 @@
 
 function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
   var safeCb = Util.safeCb;
-  var currentUser = {};
+
+  var currentUser = {
+    user: {},
+    followers: {},
+    activity: {}
+  };
+
   var userRoles = appConfig.userRoles || [];
 
   if ($cookies.get('token') && $location.path() !== '/logout') {
@@ -78,7 +84,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      * @return {Promise}
      */
     changePassword(oldPassword, newPassword, callback) {
-      return User.changePassword({ id: currentUser._id }, {
+      return User.changePassword({ id: currentUser.user._id }, {
         oldPassword: oldPassword,
         newPassword: newPassword
       }, function() {
@@ -121,12 +127,12 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      */
     isLoggedIn(callback) {
       if (arguments.length === 0) {
-        return currentUser.hasOwnProperty('role');
+        return currentUser.hasOwnProperty('user');
       }
 
       return Auth.getCurrentUser(null)
         .then(user => {
-          var is = user.hasOwnProperty('role');
+          var is = user.hasOwnProperty('user');
           safeCb(callback)(is);
           return is;
         });
@@ -146,7 +152,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       };
 
       if (arguments.length < 2) {
-        return hasRole(currentUser.role, role);
+        return hasRole(currentUser.user.role, role);
       }
 
       return Auth.getCurrentUser(null)

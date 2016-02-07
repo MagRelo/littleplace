@@ -21,7 +21,8 @@ var UserSchema = new Schema({
   salt: String,
   google: {},
   github: {},
-  groups: { type: Schema.Types.ObjectId, ref: 'Group' }
+  groups: { type: Schema.Types.ObjectId, ref: 'Group' },
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 /**

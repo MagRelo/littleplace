@@ -1,22 +1,23 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/reviewss              ->  index
- * POST    /api/reviewss              ->  create
- * GET     /api/reviewss/:id          ->  show
- * PUT     /api/reviewss/:id          ->  update
- * DELETE  /api/reviewss/:id          ->  destroy
+ * GET     /api/activity              ->  index
+ * POST    /api/activity              ->  create
+ * GET     /api/activity/:id          ->  show
+ * PUT     /api/activity/:id          ->  update
+ * DELETE  /api/activity/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Reviews from './reviews.model';
+import Activity from './activity.model';
 
 
 var stream = require('getstream');
 
 // Instantiate a new client (server side)
-var client = stream.connect('3d9sxz5ev2sh', 'qmjx4f8yhn9ksv9v7g89jeyapygvu5bnt678rf8eqxnvtvt9dk5j4t2m7s3fpsfy', '9030');
+var client = stream.connect('rpyxf5ytwwyh', 'ekwtsebsws5md7fjstncbma9au345t5ht86shgac7emqmsuhj8svcwdkqydwf4xf', '3143');
+
 
 
 function respondWithResult(res, statusCode) {
@@ -66,63 +67,52 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Reviewss
+// Gets a list of Activitys
 export function index(req, res) {
-  Reviews.findAsync()
+
+  // Instantiate a feed using feed class 'user' and user id '1'
+  const user1 = client.feed('user', req.user._id);
+
+  user1.get({limit:50, offset: 0})
     .then(respondWithResult(res))
     .catch(handleError(res));
+
 }
 
-// Gets a single Reviews from the DB
+
+// ---------
+
+
+// Gets a single Activity from the DB
 export function show(req, res) {
-  Reviews.findByIdAsync(req.params.id)
+  Activity.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Reviews in the DB
+// Creates a new Activity in the DB
 export function create(req, res) {
-  Reviews.createAsync(req.body)
-    .then(function (doc) {
-
-      // Instantiate a feed using feed class 'user' and user id '1'
-      const user1 = client.feed('user', req.user._id);
-
-      const actorString = "User:" + req.user._id
-      const groupString = "Group:" + doc._id
-      const title = req.user.name + " created a new review: " + doc.place
-
-      // Add an activity to the feed
-      const activity = {
-        "actor": actorString,
-        "verb": "createReview",
-        "object": req.user.name,
-        "title": title,
-        "foreign_id": doc._id
-      };
-
-      return user1.addActivity(activity)
-    })
+  Activity.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Reviews in the DB
+// Updates an existing Activity in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Reviews.findByIdAsync(req.params.id)
+  Activity.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Reviews from the DB
+// Deletes a Activity from the DB
 export function destroy(req, res) {
-  Reviews.findByIdAsync(req.params.id)
+  Activity.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
