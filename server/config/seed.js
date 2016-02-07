@@ -8,42 +8,43 @@ import mongoose from 'mongoose';
 import Group from '../api/group/group.model';
 import User from '../api/user/user.model';
 
-const adminUserId = mongoose.Types.ObjectId("56a3fc84898cf1bbf055cd5a")
-const testUserId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bac61")
-const rockyUserId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bad42")
-const billUserId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bae32")
+const BenId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bac61")
+const ToddId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bad42")
+const GrodeId = mongoose.Types.ObjectId("56a3e4661f46c422ef8bae32")
+
+const MattId = mongoose.Types.ObjectId("56a3fc84898cf1bbf055cd5a")
 
 User.find({}).removeAsync()
   .then(() => {
     User.createAsync(
       {
-        _id: billUserId,
+        _id: BenId,
         provider: 'local',
-        name: 'bill',
-        email: 'bill',
-        password: 'bill'
+        name: 'ben',
+        email: 'ben',
+        password: 'ben'
       },
       {
-        _id: rockyUserId,
+        _id: ToddId,
         provider: 'local',
-        name: 'rocky',
-        email: 'rocky',
-        password: 'rocky'
+        name: 'todd',
+        email: 'todd',
+        password: 'todd'
       },
       {
-        _id: testUserId,
+        _id: GrodeId,
         provider: 'local',
-        name: 'Test User',
-        email: 'test',
-        password: 'test'
+        name: 'grode',
+        email: 'grode',
+        password: 'grode'
       },
       {
-        _id: adminUserId,
+        _id: MattId,
         provider: 'local',
         role: 'admin',
-        name: 'Admin',
-        email: 'admin',
-        password: 'admin'
+        name: 'matt',
+        email: 'matt',
+        password: 'matt'
       }
     )
     .then(() => {
