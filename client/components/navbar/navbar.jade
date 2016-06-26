@@ -17,14 +17,14 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarController')
           a(ui-sref='home') Home
 
         li(ng-show='nav.isLoggedIn()', ui-sref-active='active')
-          a(ui-sref='friends') Friends
+          a(ui-sref='home') Home
 
       ul.nav.navbar-nav.navbar-right
         //- li(ng-hide='nav.isLoggedIn()', ui-sref-active='active')
         //-   a(ui-sref='signup') Sign up
 
-        li(ng-hide='nav.isLoggedIn()', ui-sref-active='active')
-          a(ui-sref='login') Login
+        //- li(ng-hide='nav.isLoggedIn()', ui-sref-active='active')
+        //-   a(ui-sref='login') Login
 
 
         //- li(ng-show='nav.isLoggedIn()')

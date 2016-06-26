@@ -5,11 +5,7 @@
 function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
   var safeCb = Util.safeCb;
 
-  var currentUser = {
-    user: {},
-    followers: {},
-    activity: {}
-  };
+  var currentUser = {};
 
   var userRoles = appConfig.userRoles || [];
 

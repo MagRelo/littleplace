@@ -14,8 +14,8 @@ angular.module('littleplaceApp', [
   'google.places',
 ])
   .config(function($urlRouterProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+
+    $urlRouterProvider.otherwise('/');
 
     $locationProvider.html5Mode(true);
 

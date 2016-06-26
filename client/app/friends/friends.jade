@@ -11,61 +11,74 @@ navbar
           options='mapOptions')
 
           ui-gmap-marker(
-            ng-repeat="activity in activity | filter : reviewFilter",
-            idKey="activity.foreign_id",
-            coords="{longitude: activity.object.location.coordinates[0], latitude: activity.object.location.coordinates[1]}")
+            ng-repeat="activity in reviews",
+            idKey="activity._id",
+            coords="{longitude: activity.location.coordinates[0], latitude: activity.location.coordinates[1]}")
 
         ul.list-unstyled.feed
 
-          li(ng-repeat="activity in activity | filter : reviewFilter")
+          a(ng-repeat="activity in reviews", ng-href="/review/{{activity._id}}")
 
-            a.pull-right(ng-href="/review/{{activity.foreign_id}}") View
+            li
+              span.glyphicon.pull-right(ng-class="{'glyphicon-thumbs-up': activity.thumbs === 'up', 'glyphicon-thumbs-down': activity.thumbs === 'down'}")
 
-            span(ng-bind-html="activity.title")
+              span(ng-bind-html="activity.placeName")
 
-            span.glyphicon(ng-class="{'glyphicon-user': activity.verb === 'joinGroup', 'glyphicon-ok': activity.type === 'review'}")
 
       uib-tab(heading="Add Review")
 
-        //- Google Typeahead
-        .well.well-sm(ng-hide="googlePlace.placeName")
-          form.form
+        //- Review form
+        form.form.reviewForm(name="reviewForm")
+
+          //- Google Typeahead
+          .form-group
+            label Search
+            input.form-control(
+              type="text",
+              ng-model="reviewForm.googlePlace",
+              g-places-autocomplete,
+              forceSelection=true,
+              options="autocompleteOptions"
+            )
+
+          .placard(ng-show="reviewForm.googlePlace.name")
             .form-group
-              label Place
-              input.form-control(
-                type="text",
-                ng-model="googlePlace.response",
-                g-places-autocomplete,
-                forceSelection=true,
-                options="autocompleteOptions"
-              )
+              //- img.pull-right(ng-src="{{reviewForm.googlePlace.icon}}")
+              p.h4 {{reviewForm.googlePlace.name}}
+              p {{reviewForm.googlePlace.formatted_phone_number}}
+              p
+                span {{reviewForm.googlePlace.address_components[0].short_name}} {{reviewForm.googlePlace.address_components[1].short_name}}
+                br
+                span {{reviewForm.googlePlace.address_components[2].short_name}}, {{reviewForm.googlePlace.address_components[3].short_name}}
 
-        //- Place details
-        .placard
-          p.h4 {{googlePlace.response.name}}
-          uib-rating(ng-model="googlePlace.response.rating")
-          p {{googlePlace.response.formatted_phone_number}}
-          p {{googlePlace.response.formatted_address}}
-
-          //- User Review
-          .well.well-sm
-            form.form(name="reviewForm")
-              div
-                label Rating
-              div.btn-group
-                label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
-                  span.glyphicon.glyphicon-thumbs-up
-                label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
-                  span.glyphicon.glyphicon-thumbs-down
+            .well.well-sm(ng-show="reviewForm.googlePlace.name")
               .form-group
+                div
+                  label Rating
+                div.btn-group
+                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
+                    span.glyphicon.glyphicon-thumbs-up
+                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
+                    span.glyphicon.glyphicon-thumbs-down
+
+              .form-group(ng-show="reviewForm.googlePlace.name")
                 label Comments
                 textarea.form-control(type="text", rows="2", ng-model="reviewForm.comments")
 
-              button.btn.btn-success(ng-click="addReview(reviewForm)") Save
+              .form-group(ng-show="reviewForm.googlePlace.name")
+                button.btn.btn-block.btn-success(ng-click="addReview(reviewForm)") Save
+
+
+
 
       uib-tab(heading="People")
 
-        h2 People
+        div.userBox
+          img(ng-src="{{currentUser.google.image.url}}")
+
+          span.name {{currentUser.google.displayName}}
+
+
         p(ng-show="rowIsLoading") loading...
         table.table.text-center(ng-show="!rowIsLoading")
           thead

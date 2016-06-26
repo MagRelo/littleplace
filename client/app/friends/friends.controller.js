@@ -35,19 +35,20 @@ angular.module('littleplaceApp')
     $scope.addReview = function (formData) {
 
       var reviewObj = {
-        placeName: $scope.googlePlace.response.name,
-        rating: $scope.googlePlace.response.rating,
-        phone: $scope.googlePlace.response.formatted_phone_number,
-        address: $scope.googlePlace.response.formatted_address,
+        placeName: formData.googlePlace.name,
+        rating: formData.googlePlace.rating,
+        phone: formData.googlePlace.formatted_phone_number,
+        address: formData.googlePlace.formatted_address,
         location: {
           type: "Point",
           coordinates: [
-            $scope.googlePlace.response.geometry.location.lng(),
-            $scope.googlePlace.response.geometry.location.lat()
+            formData.googlePlace.geometry.location.lng(),
+            formData.googlePlace.geometry.location.lat()
           ]
         },
         thumbs: formData.thumb,
         comments: formData.comments,
+        user: $scope.currentUser._id
       }
 
       reviewService.save(reviewObj)
@@ -58,30 +59,31 @@ angular.module('littleplaceApp')
         })
     }
 
-    $scope.reviewFilter = function(activity){
-      return activity.foreign_id !== null
-    }
-
     $scope.getUserData = function () {
 
       $http.get('api/users/me')
         .then(function (userResponse) {
+
           $scope.currentUser = userResponse.data.user
-          $scope.activity = userResponse.data.activity.results.map(function (activity) {
-            activity.object = JSON.parse(activity.object)
-            return activity
-          })
 
           return friendService.friendList(
-            userResponse.data.user,
-            userResponse.data.following.results,
-            userResponse.data.followers.results
-          )
+              userResponse.data.user,
+              userResponse.data.following.results,
+              userResponse.data.followers.results
+            )
         })
         .then(function (friendList) {
           $scope.users = friendList
+
+          return $http.get('api/reviews')
+        })
+        .then(function (reviews) {
+
+          $scope.reviews = reviews.data
+
           $scope.rowIsLoading = false
         })
+
 
     }
 
@@ -107,8 +109,6 @@ angular.module('littleplaceApp')
       ]
     }
 
-    $scope.getUserData()
-
     // get user location
     geolocation.getLocation()
       .then(function(data){
@@ -126,7 +126,5 @@ angular.module('littleplaceApp')
 
       })
 
-
-
-
+    $scope.getUserData()
   });

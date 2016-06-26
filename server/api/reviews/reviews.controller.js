@@ -11,12 +11,92 @@
 
 import _ from 'lodash';
 import Reviews from './reviews.model';
+import mongoose from 'mongoose';
 
 
 var stream = require('getstream');
-
 // Instantiate a new client (server side)
 var client = stream.connect('3d9sxz5ev2sh', 'qmjx4f8yhn9ksv9v7g89jeyapygvu5bnt678rf8eqxnvtvt9dk5j4t2m7s3fpsfy', '9030');
+
+
+// Gets a list of Reviews
+export function index(req, res) {
+
+  const streamUserFeed = client.feed('user', req.user._id);
+
+  streamUserFeed.get({limit:50, offset: 0})
+    .then(function (streamUserFeedResults) {
+
+      const reviewIds = streamUserFeedResults.results.map(function(activity) {
+        return mongoose.Types.ObjectId(activity.object)
+      })
+
+      return Reviews.findAsync({_id: {$in: reviewIds}}).populateAsync('user')
+    })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Creates a new Reviews in the DB
+export function create(req, res) {
+  Reviews.createAsync(req.body)
+    .then(function (doc) {
+
+      const activityTitle = '<span><span class="placeName">'
+        + doc.placeName
+        + '</span><span class="userName">'
+        + req.user.name
+        + '</span></span>'
+
+
+      const activity = {
+        "verb": "createReview",
+        "title": activityTitle,
+        "actor": "User:" + req.user._id,
+        "object": doc._id,
+        "foreign_id": req.user._id
+      };
+
+      // Instantiate stream.io user feed
+      const streamUserFeed = client.feed('user', req.user._id);
+
+      // Add activity
+      return streamUserFeed.addActivity(activity)
+    })
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+}
+
+
+// Gets a single Reviews from the DB
+export function show(req, res) {
+  Reviews.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+
+// Updates an existing Reviews in the DB
+export function update(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  Reviews.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Deletes a Reviews from the DB
+export function destroy(req, res) {
+  Reviews.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
 
 
 function respondWithResult(res, statusCode) {
@@ -66,67 +146,3 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Reviewss
-export function index(req, res) {
-  Reviews.findAsync()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Gets a single Reviews from the DB
-export function show(req, res) {
-  Reviews.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Creates a new Reviews in the DB
-export function create(req, res) {
-  Reviews.createAsync(req.body)
-    .then(function (doc) {
-
-      // Instantiate a feed using feed class 'user' and user id '1'
-      const user1 = client.feed('user', req.user._id);
-
-      const actorString = "User:" + req.user._id
-      const title = '<span><span class="placeName">'
-        + doc.placeName
-        + '</span><span class="userName">'
-        + req.user.name
-        + '</span></span>'
-
-      // Add an activity to the feed
-      const activity = {
-        "actor": actorString,
-        "verb": "createReview",
-        "object": JSON.stringify(req.body),
-        "title": title,
-        "foreign_id": doc._id
-      };
-
-      return user1.addActivity(activity)
-    })
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
-}
-
-// Updates an existing Reviews in the DB
-export function update(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
-  Reviews.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Deletes a Reviews from the DB
-export function destroy(req, res) {
-  Reviews.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
-}

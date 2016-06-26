@@ -13,6 +13,7 @@ var ReviewsSchema = new mongoose.Schema({
   },
   thumbs: String,
   comments: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
 export default mongoose.model('Reviews', ReviewsSchema);

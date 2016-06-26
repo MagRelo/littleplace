@@ -3,8 +3,8 @@
 angular.module('littleplaceApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('friends', {
-        url: '/friends',
+      .state('home', {
+        url: '/home',
         templateUrl: 'app/friends/friends.html',
         controller: 'FriendsCtrl',
         authenticate: true

@@ -8,13 +8,10 @@ import errors from './components/errors';
 import path from 'path';
 
 export default function(app) {
-  // Insert routes below
-  app.use('/api/activity', require('./api/activity'));
-  app.use('/api/reviews', require('./api/reviews'));
-  app.use('/api/groups', require('./api/group'));
-  app.use('/api/things', require('./api/thing'));
-  app.use('/api/users', require('./api/user'));
 
+  // Insert routes below
+  app.use('/api/reviews', require('./api/reviews'));
+  app.use('/api/users', require('./api/user'));
   app.use('/auth', require('./auth'));
 
   // All undefined asset or api routes should return a 404

@@ -1,11 +1,37 @@
 navbar
 
-header#banner.hero-unit
-    postme
-
 .container
   .col-md-8.col-md-offset-2
-    h2 {{review.place}}
-    h4 Rating: {{review.rating}}
-    p {{review.review}}
+
+    .backbutton
+      button.btn.btn-primary(ng-click="back()")
+        span.glyphicon.glyphicon-chevron-left
+        | Back
+
+    .placard
+      ui-gmap-google-map(
+          center='map.center',
+          zoom='map.zoom',
+          options='mapOptions')
+
+          ui-gmap-marker(
+            idKey="review._id",
+            coords="{longitude: review.location.coordinates[0], latitude: review.location.coordinates[1]}")
+
+
+      p.h4 {{review.placeName}}
+      p {{review.phone}}
+      p
+        span {{review.address}}
+
+
+    .placard
+
+      ul.list-inline
+        li
+          span.glyphicon.pull-right(ng-class="{'glyphicon-thumbs-up': review.thumbs === 'up', 'glyphicon-thumbs-down': review.thumbs === 'down'}")
+        li
+          {{review.comments}}
+
+
 

@@ -40,28 +40,50 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   }
 }
 
+.reviewForm{
+  margin-top: 10px;
+}
+
 .placard{
   box-shadow: 1px 1px 3px gray;
   padding: 10px;
   margin-bottom: 20px;
 }
 
-.feed .placeName {
-  font-weight: bold;
+.feed {
+
+  li {
+    border: solid 1px #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+
+  }
+
+  .placeName {
+    font-size: 18px;
+    color: black;
+  }
+
+  .userName {
+    font-style: italic;
+    padding-left: 10px;
+  }
+
 }
 
-.feed .userName {
-  font-style: italic;
-  padding-left: 10px;
-
-}
-
-.feed li {
-  border: solid 1px #ddd;
+.userBox{
   padding: 10px;
-  margin-bottom: 10px
-}
 
+  img{
+    margin-right: 10px;
+    border-radius: 50px;
+  }
+
+  .name{
+    font-size: 20px;
+    padding-top: 5px;
+  }
+}
 
 span.glyphicon{
   margin-right: 10px;
@@ -72,8 +94,6 @@ span.glyphicon{
 // injector
 @import 'admin/admin.scss';
 @import 'friends/friends.scss';
-@import 'group/group.scss';
-@import 'home/home.scss';
 @import 'main/main.scss';
 @import 'review/review.scss';
 @import '../components/footer/footer.scss';

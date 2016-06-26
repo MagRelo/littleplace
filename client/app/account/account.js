@@ -11,12 +11,12 @@ angular.module('littleplaceApp')
       })
       .state('logout', {
         url: '/logout?referrer',
-        referrer: 'main',
+        referrer: 'home',
         template: '',
         controller: function($state, Auth) {
           var referrer = $state.params.referrer ||
                           $state.current.referrer ||
-                          'main';
+                          'home';
           Auth.logout();
           $state.go(referrer);
         }
