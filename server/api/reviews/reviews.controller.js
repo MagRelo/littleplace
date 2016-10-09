@@ -31,7 +31,7 @@ export function index(req, res) {
         return mongoose.Types.ObjectId(activity.object)
       })
 
-      return Reviews.findAsync({_id: {$in: reviewIds}}).populateAsync('user')
+      return Reviews.find({_id: {$in: reviewIds}}).populate('user')
     })
     .then(respondWithResult(res))
     .catch(handleError(res));

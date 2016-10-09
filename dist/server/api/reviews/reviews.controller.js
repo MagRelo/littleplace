@@ -48,7 +48,7 @@ function index(req, res) {
       return _mongoose2['default'].Types.ObjectId(activity.object);
     });
 
-    return _reviewsModel2['default'].findAsync({ _id: { $in: reviewIds } }).populateAsync('user');
+    return _reviewsModel2['default'].find({ _id: { $in: reviewIds } }).populate('user');
   }).then(respondWithResult(res))['catch'](handleError(res));
 }
 

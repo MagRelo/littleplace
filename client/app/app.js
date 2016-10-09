@@ -20,7 +20,7 @@ angular.module('littleplaceApp', [
     $locationProvider.html5Mode(true);
 
     uiGmapGoogleMapApiProvider.configure({
-      key: 'AIzaSyByZEWY1mVD4izI-b397wdH_JsBSaK15Xw',
+      key: 'AIzaSyAFnV6Bxm7kMxIw8Sad_B1dIAA7CMK2kWU',
       v: '3.20', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
