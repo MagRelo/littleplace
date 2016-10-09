@@ -1,3 +1,1 @@
-FROM node:4.6.o-onbuild
-
-EXPOSE 9000
+FROM node:4.6.0-onbuild
