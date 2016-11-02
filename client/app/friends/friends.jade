@@ -19,7 +19,7 @@ navbar
 
           a(ng-repeat="activity in reviews", ng-href="/review/{{activity._id}}")
 
-            li
+            li.activity
               span.glyphicon.pull-right(ng-class="{'glyphicon-thumbs-up': activity.thumbs === 'up', 'glyphicon-thumbs-down': activity.thumbs === 'down'}")
 
               span(ng-bind-html="activity.placeName")
@@ -55,18 +55,21 @@ navbar
               .form-group
                 div
                   label Rating
-                div.btn-group
-                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
-                    span.glyphicon.glyphicon-thumbs-up
-                  label.btn.btn-primary(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
-                    span.glyphicon.glyphicon-thumbs-down
+
+                .row
+                  div.col-xs-6
+                    button.btn.btn-block.btn-success(ng-model="reviewForm.thumb" uib-btn-radio="'up'" uncheckable)
+                      span.glyphicon.glyphicon-thumbs-up
+                  div.col-xs-6
+                    button.btn.btn-block.btn-danger(ng-model="reviewForm.thumb" uib-btn-radio="'down'" uncheckable)
+                      span.glyphicon.glyphicon-thumbs-down
 
               .form-group(ng-show="reviewForm.googlePlace.name")
                 label Comments
                 textarea.form-control(type="text", rows="2", ng-model="reviewForm.comments")
 
               .form-group(ng-show="reviewForm.googlePlace.name")
-                button.btn.btn-block.btn-success(ng-click="addReview(reviewForm)") Save
+                button.btn.btn-block.btn-primary(ng-click="addReview(reviewForm)") Save
 
 
 

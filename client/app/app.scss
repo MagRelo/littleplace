@@ -1,11 +1,10 @@
 
-$brand-primary:         #FD6220 !default;
+$brand-primary:         #2c5a71 !default;
 
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
-
 
 
 $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
@@ -59,9 +58,14 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
   }
 
-  .placeName {
+  a {
     font-size: 18px;
     color: black;
+    text-decoration: none;
+  }
+
+  .activity:hover{
+    background-color: #f8f8f8;
   }
 
   .userName {
